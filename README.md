@@ -1,52 +1,71 @@
-ZendSkeletonApplication
-=======================
+1. git clone the ZF2 Skeleton Application
 
-Introduction
-------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+        git clone git://github.com/zendframework/ZendSkeletonApplication.git
 
+2. cd into the ZendSkeletonApplication directory and open the composer.json in your favourite text editor.
 
-Installation
-------------
+        {
 
-Using Composer (recommended)
-----------------------------
-The recommended way to get a working copy of this project is to clone the repository
-and use `composer` to install dependencies using the `create-project` command:
+            "name": "zendframework/skeleton-application",
 
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project --repository-url="http://packages.zendframework.com" zendframework/skeleton-application path/to/install
+            "description": "Skeleton Application for ZF2",
 
-Alternately, clone the repository and manually invoke `composer` using the shipped
-`composer.phar`:
+            "license": "BSD-3-Clause",
 
-    cd my/project/dir
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git
-    cd ZendSkeletonApplication
-    php composer.phar self-update
-    php composer.phar install
+            "keywords": [
 
-(The `self-update` directive is to ensure you have an up-to-date `composer.phar`
-available.)
+                "framework",
 
-Another alternative for downloading the project is to grab it via `curl`, and
-then pass it to `tar`:
+                "zf2"
 
-    cd my/project/dir
-    curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
+            ],
 
-You would then invoke `composer` to install dependencies per the previous
-example.
+            "homepage": "http://framework.zend.com/",
 
-Using Git submodules
---------------------
-Alternatively, you can install using native git submodules:
+            "minimum-stability": "dev",
 
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
+            "require": {
 
-Virtual Host
-------------
-Afterwards, set up a virtual host to point to the public/ directory of the
-project and you should be ready to go!
+                "php": ">=5.3.3",
+
+                "zendframework/zendframework": "2.*",
+
+                "doctrine/doctrine-mongo-odm-module": "dev-master"
+
+            }
+
+        }
+
+3. Update your composer.json and run
+
+        php composer.phar self-update
+
+        php composer.phar install
+
+4. If you are success with installing all dependencies using composer follow the official guide here to set up virtual-host and update hosts file.
+
+5. If you are unable to update those dependencies and found something similar to this,
+
+Check your composer.json for any mistakes, or follow my previous blog post.
+
+6. Add the doctrine modules to your config file, config/application.config.php. Update the modules array similar to this, here im adding zend module named course as well.
+
+                'modules' => array(
+
+                    'Application',
+
+                    'Course',
+
+                    'DoctrineModule',
+
+                    'DoctrineMongoODMModule',
+
+                ),
+
+7.  Copy the doctrine-odm config file to your config directory, and update according to your environment.This is where you set your server hosts, ports, username, and passwords etc.
+
+        cp vendor/doctrine/doctrine-mongo-odm-module/config/module.doctrine-mongo-odm.local.php.dist config/module.doctrine-mongo-odm.local.php 
+
+ and update,
+
+8. You can try the course module I have created here with course add and retrieve course data.
