@@ -62,4 +62,33 @@ class Course
         $this->teacher = $teacher;
     }
 
+    public function getProperties()
+    {
+        return get_class_vars(__CLASS__);
+    }
+
+    public function exchangeArray($data)
+    {
+        $this->id     = (isset($data['id']))     ? $data['id']     : null;
+        $this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->teacher  = (isset($data['teacher']))  ? $data['teacher']  : null;
+    }
+
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
+    public function getObjectAsArray()
+    {
+        $array = array(
+            'name'  =>$this->name,
+            'teacher'     =>$this->teacher,
+        );
+        return $array;
+    }
+
+
+
+
 }

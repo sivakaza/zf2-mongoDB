@@ -11,6 +11,13 @@ class CourseForm extends Form
         parent::__construct('course');
         $this->setAttribute('method', 'post');
 
+	$this->add(array(
+            'name' => 'id',
+            'attributes' => array(
+                'type'  => 'hidden',
+            ),
+        ));
+
         $this->add(array(
             'name' => 'name',
             'attributes' => array(
