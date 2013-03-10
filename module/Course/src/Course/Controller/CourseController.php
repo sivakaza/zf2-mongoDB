@@ -12,7 +12,6 @@ class CourseController extends AbstractActionController
     {
 	$dm = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $courses = $dm->createQueryBuilder('Course\Document\Course')
-                ->limit(20)
                 ->getQuery()
 		->execute();
 
@@ -52,6 +51,21 @@ class CourseController extends AbstractActionController
                 'action' => 'add'
             ));
         }
+	    $request = $this->getRequest();
+	    if ($request->isPost()) {
+            $data = $request->getPost();
+
+            $dm = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+	    $dm->createQueryBuilder('Course\Document\Course')
+    		->update()
+   		->field('name')->set($data['name'])
+   		->field('teacher')->set($data['teacher'])
+    		->field('id')->equals(new \MongoId($id))
+    		->getQuery()
+    		->execute();
+            return $this->redirect()->toRoute('course');
+        }
+
 	//You will get only one course here
 	$courses= $this->getCourse($id); 
 	foreach($courses as $course){
@@ -63,20 +77,6 @@ class CourseController extends AbstractActionController
             'form' => $form,
         );
 	}
-
-	    if ($request->isPost()) {
-		error_log("sssssssssssssssssssssssssssssssss");
-            $data = $request->getPost();
-
-            $dm = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $course = new Course();
-            $course->setName($data['name']);
-            $course->setTeacher($data['teacher']);
-            $dm->persist($course);
-            $dm->flush();
-
-            return $this->redirect()->toRoute('course');
-        }
 
     }
 
